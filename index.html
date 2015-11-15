@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,6 +10,9 @@
     <!-- Bootstrap -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css" type="text/css" />
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="javascript.js" defer></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -17,9 +20,8 @@
       <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-  </head>
-  <body>
-    
+</head>
+<body>
     <!-- Navigation -->
     <div class="navbar navbar-default" role="navigation">
         <div id="navbarCollapse" class="collapse navbar-collapse">
@@ -29,31 +31,50 @@
             </ul>
         </div>
     </div>
-	
-    <div class="game">
-        <!--First line-->
-        <div class="game__sign">X</div>
-        <div class="game__sign">O</div>
-        <div class="game__sign">O</div>
-        <!--Second line-->
-        <div class="game__sign">X</div>
-        <div class="game__sign">X</div>
-        <div class="game__sign">O</div>
-        <!--Third line-->
-        <div class="game__sign">O</div>
-        <div class="game__sign">X</div>
-        <div class="game__sign">X</div>
+
+    <!-- Game field -->
+    <div class="game" onclick = "turn_to(event)">
+        <script>
+            var game_fld = $('.game');
+            var divs = '';
+            for (var i = 0; i < 3; ++i) {
+                var cmt = document.createComment(i + 1 + ' line');
+                game_fld.append(cmt);
+                for (var j = 0; j < 3; ++j) {
+                    //divs += '<div class="game__sign" onclick = "turn_to(' + i + ', ' + j + ')"></div>';
+                    divs += '<div class="game__sign" id="' + i + '_' + j + '"></div>';
+                }
+            }
+            game_fld.html(divs);
+        </script>
     </div>
     <br>
-    <div id="score">SCORE</div>
+
+    <!-- Score -->
+    <div id="score"><u>Player №1 (X)</u>  0:0  Player №2 (O)</div>
+
+    <!-- Modal window -->
+    <div class="modal fade" id="basicModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content" style="text-align:center;">
+                <div class="modal-header">
+                    <h1 class="modal-title" id="winner"></h1>
+                </div>
+                <div class="modal-body">
+                    <h4>Do you want to continue game or to start new game?</h4>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" type="button" data-dismiss="modal" onclick="clear_field(false)">Continue</button>
+                    <button class="btn btn-primary" type="button" data-dismiss="modal" onclick="clear_field(true)">New game</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-  </body>
+</body>
 
 </html>
