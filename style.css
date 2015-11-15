@@ -1,0 +1,27 @@
+﻿.game{
+    display: flex;
+    justify-content:space-around;
+    flex-flow: row wrap;
+    margin:auto;
+    width: 420px;
+    height: 420px;
+    -moz-user-select: none; 
+    -webkit-user-select: none;
+    
+}
+
+.game__sign{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 33%;
+    height: 33%;
+    font-size: 100pt;    
+    border: solid;
+    
+}
+
+#score{
+    text-align: center;
+    font-size: 30px;
+}
