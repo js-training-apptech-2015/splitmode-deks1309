@@ -23,7 +23,17 @@
    
 }
 
-#score{
-    text-align: center;
+.score{
+    display:flex;
+    justify-content: center;
     font-size: 30px;
+}
+
+.score__players{
+    margin:0px 10px 0px 10px;
+}
+.score__players.active{
+
+    text-decoration: underline; 
+
 }
