@@ -26,35 +26,43 @@
     <div class="navbar navbar-default" role="navigation">
         <div id="navbarCollapse" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">New game</a></li>
-                <li><a href="#">Mode</a></li>
+                <li class="active"><a href="">New game</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Multiplayer<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="" role="button" id="mp-create">Create game</a></li>
+                        <li><a href="" id="mp-join">Join game</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
 
     <!-- Game field -->
-    <div class="game" onclick = "turn_to(event)">
+    <div class="game">
         <script>
             var game_fld = $('.game');
             var divs = '';
-            for (var i = 0; i < 3; ++i) {
-                var cmt = document.createComment(i + 1 + ' line');
-                game_fld.append(cmt);
-                for (var j = 0; j < 3; ++j) {
-                    //divs += '<div class="game__sign" onclick = "turn_to(' + i + ', ' + j + ')"></div>';
-                    divs += '<div class="game__sign" id="' + i + '_' + j + '"></div>';
-                }
+            for (var i = 0; i < 9; ++i) {
+                if (i === 0 || i === 3 || i === 6) {
+                    divs += '<!-- '+((i / 3) + 1) + ' line -->';
+                 }
+                divs += '<div class="game__sign" id="' + i + '"></div>';
             }
-            game_fld.html(divs);
+            game_fld.append(divs);
         </script>
     </div>
     <br>
 
     <!-- Score -->
-    <div id="score"><u>Player №1 (X)</u>  0:0  Player №2 (O)</div>
+    <div class="score">
+        <span class="score__players active" id="player_1">Player №1 (X)</span><span id="player_1_score">0</span>
+        :
+        <span id="player_2_score">0</span><span class="score__players" id="player_2">Player №2 (O)</span>
+    </div>
 
-    <!-- Modal window -->
-    <div class="modal fade" id="basicModal" role="dialog">
+    <!-- Modal window single new game -->
+    <div class="modal fade" id="winModal" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content" style="text-align:center;">
                 <div class="modal-header">
@@ -64,8 +72,46 @@
                     <h4>Do you want to continue game or to start new game?</h4>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-default" type="button" data-dismiss="modal" onclick="clear_field(false)">Continue</button>
-                    <button class="btn btn-primary" type="button" data-dismiss="modal" onclick="clear_field(true)">New game</button>
+                    <button class="btn btn-default" type="button" data-dismiss="modal" id="btn_continue">Continue</button>
+                    <button class="btn btn-primary" type="button" data-dismiss="modal" id="btn_new">New game</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal window net new game-->
+    <div class="modal fade" id="mpModal-new" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content" style="text-align:center;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h1 class="modal-title" id="header">New game.</h1>
+                </div>
+                <div class="modal-body">
+                    <h4>Send this token to your friend and play.</h4>
+                    <input type="text" class="form-control" readonly id="show_token" onclick="this.select()" />
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" type="button" data-dismiss="modal" id="btn-mp-create">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal window net join game-->
+    <div class="modal fade" id="mpModal-join" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content" style="text-align:center;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h1 class="modal-title" id="header">Join game.</h1>
+                </div>
+                <div class="modal-body">
+                    <h4>Enter token to play with your friend.</h4>
+                    <input type="text" class="form-control" id="input_token" />
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" type="button" data-dismiss="modal" id="btn-mp-join">Join</button>
                 </div>
             </div>
         </div>
